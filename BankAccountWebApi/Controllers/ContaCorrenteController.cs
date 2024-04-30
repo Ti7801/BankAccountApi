@@ -4,6 +4,8 @@ using BankAccountWebApi.Dados;
 
 namespace BankAccountWebApi.Controllers
 {
+    [ApiController]
+    [Route("contaCorrente")]
     public class ContaCorrenteController : ControllerBase
     {
 

@@ -9,7 +9,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<BancoDeDados>(); // Tornando a classe banco de dados permanente
+
+//Injeção de Dependência
+//builder.Services.AddScoped<AppDbContext>(); 
+builder.Services.AddSingleton<BancoDeDados>();
 
 var app = builder.Build();
 
