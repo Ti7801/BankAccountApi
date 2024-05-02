@@ -75,7 +75,7 @@ namespace BankAccountWebApi.Controllers
         {
             var correntistaDeletado = banco.DeletarCorrentistaPorId(novoCorrentista);
             
-            return correntistaDeletado;
+            return Ok(correntistaDeletado);
         }
     }
 }

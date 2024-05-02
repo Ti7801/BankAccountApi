@@ -23,5 +23,8 @@ namespace BankAccountWebApi.Models
         {
             ContaCorrente = new List<ContaCorrente>();    
         }
+
+
+
     }
 }

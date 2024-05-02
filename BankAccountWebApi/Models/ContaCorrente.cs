@@ -1,21 +1,26 @@
-﻿namespace BankAccountWebApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BankAccountWebApi.Models
 {
     public class ContaCorrente
     {
-        public string Numero { get; set; }
-        public string Agencia { get; set; }
-        public float Saldo { get; set; }
-        public float Manutencao { get; set; }
-        public int Length { get; }
-        public Correntista Correntista { get; set; }
-    
+        [Required]
+        public string? Numero { get; set; }
+        [Required]
+        public string? Agencia { get; set; }
+        
+        public float? Saldo { get; set; }
+      
+        public float? Manutencao { get; set; }
+  
+        private int? Length { get; }
 
-        public ContaCorrente(string numero, string agencia, float saldo,float manutencao, Correntista correntista) 
+        [Required]
+        public int Correntista_id { get; set; } 
+
+        public ContaCorrente() 
         {
-            this.Numero = numero;
-            this.Agencia = agencia;
-            this.Saldo = saldo;
-            this.Correntista = correntista;
+
         }
 
         public void Depositar(float saldo)
@@ -23,7 +28,7 @@
             Saldo += saldo;
         }
 
-        public float Sacar(float saldo)
+        public float? Sacar(float saldo)
         {
             if (PossoSacar(saldo))
             {
@@ -64,6 +69,6 @@
             }
 
             return false;
-        }
+        }      
     }
 }
