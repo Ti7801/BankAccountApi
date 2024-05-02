@@ -62,16 +62,16 @@ namespace BankAccountWebApi.Dados
             return contasCorrentes; 
         }
 
-        public ContaCorrente? ObterContaCorrentePorId(int correntista_id)
+        public ContaCorrente? ObterContaCorrentePorId(ContaCorrente contaCorrente)
         {
-            var novaContaCorrente = contasCorrentes.Where(novaContaCorrente => novaContaCorrente.Equals(correntista_id)).SingleOrDefault();
+            var novaContaCorrente = contasCorrentes.Where(novaContaCorrente => novaContaCorrente.Equals(contaCorrente.Correntista_id)).SingleOrDefault();
 
             return novaContaCorrente;
         }
 
-        public ContaCorrente? DeletarContaCorrentePorId(int correntista_id)
+        public ContaCorrente? DeletarContaCorrentePorId(ContaCorrente contaCorrente)
         {
-            var DeletarContaCorrente = ObterContaCorrentePorId(correntista_id);
+            var DeletarContaCorrente = ObterContaCorrentePorId(contaCorrente);
 
             if (DeletarContaCorrente == null)
             {

@@ -6,6 +6,7 @@ namespace BankAccountWebApi.Models
     {
         [Required]
         public string? Numero { get; set; }
+
         [Required]
         public string? Agencia { get; set; }
         
@@ -13,7 +14,7 @@ namespace BankAccountWebApi.Models
       
         public float? Manutencao { get; set; }
   
-        private int? Length { get; }
+        //private int? Length { get; }
 
         [Required]
         public int Correntista_id { get; set; } 
