@@ -48,7 +48,7 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ContaCorrente>? AtualizarContaCorrente(ContaCorrente contaCorrenteNova)
         {
-            var contaCorrenteAntiga = banco.ObterContaCorrentePorId(contaCorrenteNova);
+            var contaCorrenteAntiga = banco.ObterContaCorrentePorId(contaCorrenteNova.Correntista_id);
 
             if (contaCorrenteAntiga == null)
             {
@@ -75,7 +75,7 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ContaCorrente> DeletarContaCorrente(ContaCorrente contaCorrente)
         {
-           var contaCorrenteDeletada =  banco.DeletarContaCorrentePorId(contaCorrente);
+           var contaCorrenteDeletada =  banco.DeletarContaCorrentePorId(contaCorrente.Correntista_id);
 
             if (contaCorrenteDeletada == null)
             {

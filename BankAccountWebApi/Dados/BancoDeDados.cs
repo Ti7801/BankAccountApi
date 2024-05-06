@@ -27,16 +27,16 @@ namespace BankAccountWebApi.Dados
             return correntistas;
         }
 
-        public Correntista? ObterCorrentistaPorId(Correntista novoCorrentista)
+        public Correntista? ObterCorrentistaPorCpf(string? cpf)
         {
-            var correntista = correntistas.Where(correntista => correntista.Equals(novoCorrentista.Cpf)).SingleOrDefault();
+            var correntista = correntistas.Where( v => v.Cpf == cpf).SingleOrDefault();
 
             return correntista;
         }
 
-        public Correntista? DeletarCorrentistaPorId(Correntista novoCorrentista)
+        public Correntista? DeletarCorrentistaPorCpf(string? cpf)
         {
-            var deletarCorrentista = correntistas.Where(deletarCorrentista => deletarCorrentista.Equals(novoCorrentista.Cpf)).SingleOrDefault();
+            var deletarCorrentista = correntistas.Where(v => v.Cpf == cpf).SingleOrDefault();
 
             if (deletarCorrentista == null)
             {
@@ -62,16 +62,16 @@ namespace BankAccountWebApi.Dados
             return contasCorrentes; 
         }
 
-        public ContaCorrente? ObterContaCorrentePorId(ContaCorrente contaCorrente)
+        public ContaCorrente? ObterContaCorrentePorId(int correntista_id)
         {
-            var novaContaCorrente = contasCorrentes.Where(novaContaCorrente => novaContaCorrente.Equals(contaCorrente.Correntista_id)).SingleOrDefault();
+            var novaContaCorrente = contasCorrentes.Where(v => v.Correntista_id == correntista_id).SingleOrDefault();
 
             return novaContaCorrente;
         }
 
-        public ContaCorrente? DeletarContaCorrentePorId(ContaCorrente contaCorrente)
+        public ContaCorrente? DeletarContaCorrentePorId(int correntista_id)
         {
-            var DeletarContaCorrente = ObterContaCorrentePorId(contaCorrente);
+            var DeletarContaCorrente = ObterContaCorrentePorId(correntista_id);
 
             if (DeletarContaCorrente == null)
             {

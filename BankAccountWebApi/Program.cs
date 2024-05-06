@@ -9,7 +9,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
 //Injeção de Dependência
 //builder.Services.AddScoped<AppDbContext>(); 
 builder.Services.AddSingleton<BancoDeDados>();

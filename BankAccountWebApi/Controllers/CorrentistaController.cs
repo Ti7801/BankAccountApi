@@ -5,7 +5,7 @@ using BankAccountWebApi.Dados;
 namespace BankAccountWebApi.Controllers
 {
     [ApiController]
-    [Route("[conrrentista]")]
+    [Route("correntista")]
     public class CorrentistaController : ControllerBase
     {
         public readonly BancoDeDados banco;
@@ -47,11 +47,11 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Correntista> AtualizarCorrentista(Correntista novoCorrentista)
         {
-            var correntista = banco.ObterCorrentistaPorId(novoCorrentista);
+            var correntista = banco.ObterCorrentistaPorCpf(novoCorrentista.Cpf);
 
             if (correntista == null)
             {
-                return NotFound();
+                return NotFound(correntista);
             }
 
             if (!ModelState.IsValid)
@@ -73,7 +73,7 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Correntista?> DeletarCorrentista(Correntista novoCorrentista)
         {
-            var correntistaDeletado = banco.DeletarCorrentistaPorId(novoCorrentista);
+            var correntistaDeletado = banco.DeletarCorrentistaPorCpf(novoCorrentista.Cpf);
             
             return Ok(correntistaDeletado);
         }

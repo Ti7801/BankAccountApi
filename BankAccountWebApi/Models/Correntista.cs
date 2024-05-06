@@ -14,14 +14,14 @@ namespace BankAccountWebApi.Models
 
         [Required(ErrorMessage = "Senha é um campo obrigatório!")]
         [StringLength(6, ErrorMessage = "A senha deve conter 6 digitos!")]
-        public int Senha { get; set; }
+        public string? Senha { get; set; }
 
-        public List<ContaCorrente> ContaCorrente { get; private set; }
+        //public List<ContaCorrente> ContaCorrente { get; private set; }
 
 
         public Correntista()
         {
-            ContaCorrente = new List<ContaCorrente>();    
+            //ContaCorrente = new List<ContaCorrente>();    
         }
 
 
