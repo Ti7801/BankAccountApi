@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BankAccountWebApi.Models;
 using BankAccountWebApi.Dados;
+using System;
 
 namespace BankAccountWebApi.Controllers
 {
@@ -8,11 +9,11 @@ namespace BankAccountWebApi.Controllers
     [Route("correntista")]
     public class CorrentistaController : ControllerBase
     {
-        public readonly BancoDeDados banco;
+        public readonly AppDbContext appDbContext;
 
-        public CorrentistaController(BancoDeDados banco)
+        public CorrentistaController(AppDbContext appDbContext)
         {
-            this.banco = banco;
+            this.appDbContext = appDbContext;
         }
 
         [HttpPost]

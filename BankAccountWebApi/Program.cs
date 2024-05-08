@@ -1,4 +1,7 @@
 using BankAccountWebApi.Dados;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using BankAccountWebApi.Dados;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +13,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Injeção de Dependência
-//builder.Services.AddScoped<AppDbContext>(); 
-builder.Services.AddSingleton<BancoDeDados>();
+builder.Services.AddDbContext<AppDbContext> ((DbContextOptionsBuilder optionsBuilder) =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    optionsBuilder.UseSqlServer(connectionString);
+}, ServiceLifetime.Scoped);
+
 
 var app = builder.Build();
 
