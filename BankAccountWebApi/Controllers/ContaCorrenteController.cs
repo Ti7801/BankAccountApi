@@ -10,11 +10,13 @@ namespace BankAccountWebApi.Controllers
     {
 
         public readonly AppDbContext appDbContext;
+        public readonly BancoDeDados banco;
 
 
-        public ContaCorrenteController(AppDbContext appDbContext)
+        public ContaCorrenteController(AppDbContext appDbContext, BancoDeDados banco)
         {
             this.appDbContext = appDbContext;
+            this.banco = banco;
         }
 
         [HttpPost]

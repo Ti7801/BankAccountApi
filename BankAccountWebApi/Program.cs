@@ -13,11 +13,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Injeção de Dependência
-builder.Services.AddDbContext<AppDbContext> ((DbContextOptionsBuilder optionsBuilder) =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    optionsBuilder.UseSqlServer(connectionString);
-}, ServiceLifetime.Scoped);
+
+builder.Services.AddDbContext<AppDbContext> (
+
+    (DbContextOptionsBuilder optionsBuilder) =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        optionsBuilder.UseSqlServer(connectionString);
+    }, 
+    ServiceLifetime.Scoped
+);
+
+builder.Services.AddSingleton<BancoDeDados>();
 
 
 var app = builder.Build();

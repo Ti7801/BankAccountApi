@@ -4,6 +4,9 @@ namespace BankAccountWebApi.Models
 {
     public class ContaCorrente
     {
+        [Key]
+        public Guid Id { get; set; }
+
         [Required]
         public string? Numero { get; set; }
 
@@ -21,7 +24,7 @@ namespace BankAccountWebApi.Models
 
         public ContaCorrente() 
         {
-
+            Id = Guid.NewGuid();
         }
 
         public void Depositar(float saldo)

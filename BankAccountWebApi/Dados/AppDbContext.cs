@@ -10,7 +10,7 @@ namespace BankAccountWebApi.Dados
 
         public AppDbContext(DbContextOptions options) : base(options) 
         { 
-
+           
         } 
     }
 }

@@ -10,10 +10,12 @@ namespace BankAccountWebApi.Controllers
     public class CorrentistaController : ControllerBase
     {
         public readonly AppDbContext appDbContext;
+        public readonly BancoDeDados banco;
 
-        public CorrentistaController(AppDbContext appDbContext)
+        public CorrentistaController(AppDbContext appDbContext, BancoDeDados banco)
         {
             this.appDbContext = appDbContext;
+            this.banco = banco;
         }
 
         [HttpPost]
@@ -22,6 +24,7 @@ namespace BankAccountWebApi.Controllers
         public ActionResult<Correntista> CriarCorrentista(Correntista novocorrentista)
         {
             var correntista = banco.AdicionarCorrentista(novocorrentista);
+        
 
             if (!ModelState.IsValid)
             {

@@ -4,6 +4,9 @@ namespace BankAccountWebApi.Models
 {
     public class Correntista
     {
+        [Key]
+        public Guid Id { get; set; }    
+
         public string? Nome { get; set; }
 
         [Required(ErrorMessage = "CPF é um campo obrigatório!")]
@@ -16,15 +19,9 @@ namespace BankAccountWebApi.Models
         [StringLength(6, ErrorMessage = "A senha deve conter 6 digitos!")]
         public string? Senha { get; set; }
 
-        //public List<ContaCorrente> ContaCorrente { get; private set; }
-
-
         public Correntista()
         {
-            //ContaCorrente = new List<ContaCorrente>();    
+            Id = Guid.NewGuid();   
         }
-
-
-
     }
 }
