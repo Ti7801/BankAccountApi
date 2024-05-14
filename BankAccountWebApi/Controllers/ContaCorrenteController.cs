@@ -10,13 +10,10 @@ namespace BankAccountWebApi.Controllers
     {
 
         public readonly AppDbContext appDbContext;
-        public readonly BancoDeDados banco;
 
-
-        public ContaCorrenteController(AppDbContext appDbContext, BancoDeDados banco)
+        public ContaCorrenteController(AppDbContext appDbContext)
         {
             this.appDbContext = appDbContext;
-            this.banco = banco;
         }
 
         [HttpPost]
@@ -24,8 +21,10 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ContaCorrente>  CriarContaCorrente(ContaCorrente contaCorrente)
         {
-            banco.AdicionarContaCorrente(contaCorrente);
-
+            appDbContext.ContaCorrenteBanco.Add(contaCorrente);
+            appDbContext.SaveChanges();
+            
+           
             if (!ModelState.IsValid) 
             {
                 var erros = ModelState.Values.SelectMany(v => v.Errors).Select(erros => erros.ErrorMessage);
@@ -40,7 +39,7 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<ContaCorrente>> ListarContaCorrente() 
         {
-            var lista = banco.ObterContasCorrentes();   
+            var lista = appDbContext.ContaCorrenteBanco;
 
             return Ok(lista);
         }
@@ -50,7 +49,7 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ContaCorrente>? AtualizarContaCorrente(ContaCorrente contaCorrenteNova)
         {
-            var contaCorrenteAntiga = banco.ObterContaCorrentePorId(contaCorrenteNova.Correntista_id);
+            var contaCorrenteAntiga = appDbContext.ContaCorrenteBanco.Where(u => u.Correntista_id == contaCorrenteNova.Correntista_id).SingleOrDefault();
 
             if (contaCorrenteAntiga == null)
             {
@@ -69,6 +68,9 @@ namespace BankAccountWebApi.Controllers
             contaCorrenteAntiga.Manutencao = contaCorrenteNova.Manutencao;
             contaCorrenteAntiga.Correntista_id = contaCorrenteNova.Correntista_id;
 
+            appDbContext.ContaCorrenteBanco.Update(contaCorrenteAntiga);
+            appDbContext.SaveChanges();
+
             return Ok(contaCorrenteAntiga);
         }
 
@@ -76,13 +78,16 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<ContaCorrente> DeletarContaCorrente(ContaCorrente contaCorrente)
-        {
-           var contaCorrenteDeletada =  banco.DeletarContaCorrentePorId(contaCorrente.Correntista_id);
+        {         
+            var contaCorrenteDeletada = appDbContext.ContaCorrenteBanco.Where(u => u.Correntista_id == contaCorrente.Correntista_id).SingleOrDefault();
 
             if (contaCorrenteDeletada == null)
             {
                 return BadRequest();   
             }
+
+            appDbContext.ContaCorrenteBanco.Remove(contaCorrenteDeletada);
+            appDbContext.SaveChanges();
 
             return Ok(contaCorrenteDeletada);
         }

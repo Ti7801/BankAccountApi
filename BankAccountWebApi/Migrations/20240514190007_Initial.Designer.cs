@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAccountWebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240513204912_Initial")]
+    [Migration("20240514190007_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,8 +34,8 @@ namespace BankAccountWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Correntista_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Correntista_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float?>("Manutencao")
                         .HasColumnType("real");

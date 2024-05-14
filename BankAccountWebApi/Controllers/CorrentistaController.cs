@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BankAccountWebApi.Models;
 using BankAccountWebApi.Dados;
-using System;
+
 
 namespace BankAccountWebApi.Controllers
 {
@@ -10,12 +10,10 @@ namespace BankAccountWebApi.Controllers
     public class CorrentistaController : ControllerBase
     {
         public readonly AppDbContext appDbContext;
-        public readonly BancoDeDados banco;
 
-        public CorrentistaController(AppDbContext appDbContext, BancoDeDados banco)
+        public CorrentistaController(AppDbContext appDbContext)
         {
-            this.appDbContext = appDbContext;
-            this.banco = banco;
+           this.appDbContext = appDbContext;
         }
 
         [HttpPost]
@@ -23,7 +21,8 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Correntista> CriarCorrentista(Correntista novocorrentista)
         {
-            var correntista = banco.AdicionarCorrentista(novocorrentista);
+            appDbContext.CorrentistasBanco.Add(novocorrentista);
+            appDbContext.SaveChanges();
         
 
             if (!ModelState.IsValid)
@@ -33,14 +32,14 @@ namespace BankAccountWebApi.Controllers
                 return BadRequest(errors);
             }
 
-            return CreatedAtAction(actionName:nameof(CriarCorrentista), correntista);
+            return CreatedAtAction(actionName:nameof(CriarCorrentista), novocorrentista);
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<Correntista>> ListarCorrentistas()
         {
-            var lista = banco.ObterCorrentistas();
+           var lista = appDbContext.CorrentistasBanco;
 
             return Ok(lista);
         }
@@ -51,7 +50,8 @@ namespace BankAccountWebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Correntista> AtualizarCorrentista(Correntista novoCorrentista)
         {
-            var correntista = banco.ObterCorrentistaPorCpf(novoCorrentista.Cpf);
+
+            var correntista = appDbContext.CorrentistasBanco.Where(u => u.Id == novoCorrentista.Id).SingleOrDefault();
 
             if (correntista == null)
             {
@@ -69,16 +69,27 @@ namespace BankAccountWebApi.Controllers
             correntista.Email = novoCorrentista.Email;
             correntista.Senha = novoCorrentista.Senha;
 
+            appDbContext.CorrentistasBanco.Update(correntista);
+            appDbContext.SaveChanges();
+
             return Ok(correntista);
         }
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Correntista?> DeletarCorrentista(Correntista novoCorrentista)
+        public ActionResult<Correntista> DeletarCorrentista(Correntista  novoCorrentista)
         {
-            var correntistaDeletado = banco.DeletarCorrentistaPorCpf(novoCorrentista.Cpf);
-            
+            var correntistaDeletado = appDbContext.CorrentistasBanco.Where(u => u.Id == novoCorrentista.Id).SingleOrDefault();
+
+            if (correntistaDeletado == null)
+            {
+                return NotFound(correntistaDeletado);
+            }
+
+            appDbContext.CorrentistasBanco.Remove(correntistaDeletado);
+            appDbContext.SaveChanges();
+
             return Ok(correntistaDeletado);
         }
     }

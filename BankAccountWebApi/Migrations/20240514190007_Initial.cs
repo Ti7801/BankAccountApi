@@ -18,7 +18,7 @@ namespace BankAccountWebApi.Migrations
                     Agencia = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Saldo = table.Column<float>(type: "real", nullable: true),
                     Manutencao = table.Column<float>(type: "real", nullable: true),
-                    Correntista_id = table.Column<int>(type: "int", nullable: false)
+                    Correntista_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

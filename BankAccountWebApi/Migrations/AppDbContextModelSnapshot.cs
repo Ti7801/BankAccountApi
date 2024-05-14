@@ -32,8 +32,8 @@ namespace BankAccountWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Correntista_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Correntista_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float?>("Manutencao")
                         .HasColumnType("real");

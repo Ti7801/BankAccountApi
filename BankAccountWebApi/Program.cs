@@ -24,8 +24,6 @@ builder.Services.AddDbContext<AppDbContext> (
     ServiceLifetime.Scoped
 );
 
-builder.Services.AddSingleton<BancoDeDados>();
-
 
 var app = builder.Build();
 

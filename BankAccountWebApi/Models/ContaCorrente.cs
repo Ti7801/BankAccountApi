@@ -16,11 +16,9 @@ namespace BankAccountWebApi.Models
         public float? Saldo { get; set; }
       
         public float? Manutencao { get; set; }
-  
-        //private int? Length { get; }
 
         [Required]
-        public int Correntista_id { get; set; } 
+        public Guid Correntista_id { get; set; } 
 
         public ContaCorrente() 
         {
